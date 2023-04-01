@@ -20,7 +20,7 @@ create table artist (
     artistID varchar(5),
     fname varchar(20) not null,
     lname varchar(20) not null,
-    artistBio varchar(100),
+    artistBio varchar(200),
     artistURL varchar(50),
     primary key (artistID)
 );
@@ -33,7 +33,7 @@ create table album (
 create table friend (
     user1 varchar(10),
     user2 varchar(10),
-    acceptStatus varchar(10) check (acceptStatus in ('Accepted', 'Not accepted', 'Pending')),
+    acceptStatus varchar(12) check (acceptStatus in ('Accepted', 'Not accepted', 'Pending')),
     requestSentBy varchar(10),
     createdAt datetime,
     updatedAt datetime,
