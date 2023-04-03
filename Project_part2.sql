@@ -9,19 +9,19 @@ UNION
 SELECT user2 FROM friend WHERE user1="johndoe";
 
 -- This is question 3
-(
-    SELECT f.follower AS username, 'Follower' AS relationship
-    FROM follows f
-    JOIN user u ON f.follower = u.username
-    WHERE f.follows = 'ericli'
-)
-UNION ALL
-(
-    SELECT f.follows AS username, 'Following' AS relationship
-    FROM follows f
-    JOIN user u ON f.follows = u.username
-    WHERE f.follower = 'ericli'
-)
+--all user's folloers 
+
+SELECT f.follower AS username, 'Follower' AS relationship
+FROM follows f
+JOIN user u ON f.follower = u.username
+WHERE f.follows = 'ericli'
+ORDER BY relationship, username;
+
+--all user follows 
+SELECT f.follows AS username, 'Following' AS relationship
+FROM follows f
+JOIN user u ON f.follows = u.username
+WHERE f.follower = 'ericli'
 ORDER BY relationship, username;
 
 -- This is question 4
