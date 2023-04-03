@@ -31,12 +31,7 @@ SELECT * FROM friend WHERE (user1="timchen" or user2="timchen") AND requestSentB
 -- notified of reiviews of song 
 SELECT
     U.username, RS.songID, RS.reviewText, RS.reviewDate
-FROM
-    user AS U
-JOIN
-    reviewSong AS RS
-ON
-    U.username = RS.username
+FROM user AS U JOIN reviewSong AS RS ON U.username = RS.username
 WHERE
     (U.username IN (SELECT user2 FROM friend WHERE user1 = 'johndoe' AND acceptStatus = 'Accepted')
     OR U.username IN (SELECT follows FROM follows WHERE follower = 'johndoe'))
@@ -48,9 +43,9 @@ SELECT
     U.username, RA.albumID, RA.reviewText, RA.reviewDate
 FROM user AS U JOIN reviewAlbum AS RA ON U.username = RA.username
 WHERE
-    (U.username IN (SELECT user2 FROM friend WHERE user1 = 'exampleUser' AND acceptStatus = 'Accepted')
-    OR U.username IN (SELECT follows FROM follows WHERE follower = 'exampleUser'))
-    AND RA.reviewDate > (SELECT lastlogin FROM user WHERE username = 'exampleUser')
+    (U.username IN (SELECT user2 FROM friend WHERE user1 = 'ericli' AND acceptStatus = 'Accepted')
+    OR U.username IN (SELECT follows FROM follows WHERE follower = 'ericli'))
+    AND RA.reviewDate > (SELECT lastlogin FROM user WHERE username = 'ericli')
 ORDER BY
     RA.reviewDate DESC;
 
