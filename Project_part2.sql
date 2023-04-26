@@ -9,7 +9,7 @@ UNION
 SELECT user2 FROM friend WHERE user1="johndoe";
 
 -- This is question 3
---all user's folloers 
+-- all user's followers 
 
 SELECT f.follower AS username, 'Follower' AS relationship
 FROM follows f
@@ -17,7 +17,7 @@ JOIN user u ON f.follower = u.username
 WHERE f.follows = 'ericli'
 ORDER BY relationship, username;
 
---all user follows 
+-- all user follows 
 SELECT f.follows AS username, 'Following' AS relationship
 FROM follows f
 JOIN user u ON f.follows = u.username
@@ -38,7 +38,7 @@ WHERE
     AND RS.reviewDate > (SELECT lastlogin FROM user WHERE username = 'johndoe')
 ORDER BY
     RS.reviewDate DESC;
---notified of reviews of album
+-- notified of reviews of album
 SELECT
     U.username, RA.albumID, RA.reviewText, RA.reviewDate
 FROM user AS U JOIN reviewAlbum AS RA ON U.username = RA.username
