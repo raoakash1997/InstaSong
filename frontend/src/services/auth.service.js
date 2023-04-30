@@ -41,11 +41,47 @@ const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
 
+const getSongByName = async(searchTerm) => {
+  console.log(searchTerm)
+  const result = await axios.post(API_URL + "searchSong", {
+      searchTerm: searchTerm
+    })
+   return result
+}
+
+const getAlbumByName = async(searchTerm) => {
+  console.log(searchTerm)
+  const result = await axios.post(API_URL + "searchAlbum", {
+      searchTerm: searchTerm
+    })
+   return result
+}
+
+const getSongsByGenre = async(searchTerm) => {
+  console.log(searchTerm)
+  const result = await axios.post(API_URL + "searchGenre", {
+      searchTerm: searchTerm
+    })
+   return result
+}
+
+const getSongsByArtist = async(searchTerm) => {
+  console.log(searchTerm)
+  const result = await axios.post(API_URL + "searchArtist", {
+      searchTerm: searchTerm
+    })
+   return result
+}
+
 const AuthService = {
   register,
   login,
   logout,
   getCurrentUser,
+  getSongByName,
+  getSongsByGenre,
+  getAlbumByName,
+  getSongsByArtist
 };
 
 export default AuthService;

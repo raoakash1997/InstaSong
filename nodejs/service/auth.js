@@ -77,7 +77,6 @@ const registerUser = async (userName, password, firstName, lastName, email, prof
       "INSERT into music_db.user (userName, pwd, fName, lName, email, nickname) values (?,?,?,?,?,?)",
       [userName, hashedPassword, firstName, lastName, email, profile]
     );
-    console.log('chedkc', res)
     return {
       ...res, 
       token: generateToken(userName)

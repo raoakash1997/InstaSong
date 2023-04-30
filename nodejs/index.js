@@ -6,7 +6,9 @@ const AuthMiddleWare = require('./middleware/auth');
 const RecipeService = require('./service/recipe');
 const errorHandler = require("./middleware/errorHandler");
 const morgan = require('morgan');
-
+const SongService = require('./service/song')
+const GenreService = require('./service/genre')
+const ArtistService = require('./service/artist')
 require("dotenv").config();
 
 const app = express();
@@ -22,7 +24,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.post('/signup', async (req, res, next) => {
   try {
-    console.log('hello')
     const {
       userName, password, firstName, lastName, email, profile
     } = req.body;
@@ -47,6 +48,43 @@ app.post('/login', async (req, res, next) => {
   }
 })
 
+app.post('/searchSong', async (req, res) => {
+  try {
+    const {
+      searchTerm
+    } = req.body;
+    const song = await SongService.getSongByName(searchTerm);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(song)
+  } catch (e) {
+    console.error(e);
+  }
+})
+
+app.post('/searchGenre', async (req, res) => {
+  try {
+    const {
+      searchTerm
+    } = req.body;
+    const song = await GenreService.getSongsByGenre(searchTerm);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(song)
+  } catch (e) {
+    console.error(e);
+  }
+})
+app.post('/searchArtist', async (req, res) => {
+  try {
+    const {
+      searchTerm
+    } = req.body;
+    const song = await ArtistService.getSongsByArtist(searchTerm);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(song)
+  } catch (e) {
+    console.error(e);
+  }
+})
 
 app.use(AuthMiddleWare.loginAuth);
 
@@ -75,6 +113,8 @@ app.post('/recipe', async (req, res, next) => {
     next(e);
   }
 });
+
+//Akash
 
 app.use(errorHandler);
 
