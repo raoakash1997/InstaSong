@@ -17,7 +17,7 @@ import EventBus from "./common/EventBus";
 import axios from "axios";
 import Album from "./components/Album";
 import Artist from "./components/Artist";
-
+import SearchUser from "./components/SearchUser"
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState("")
@@ -28,6 +28,8 @@ const App = () => {
     { key: 'song', text: 'Song', value: 'song' },
     { key: 'genre', text: 'Genre', value: 'genre' },
     { key: 'artist', text: 'Artist', value: 'artist' },
+    { key: 'album', text: 'Album', value: 'album'},
+    { key: 'user', text: 'User', value: 'user'},
   ]
 
   const navigate = useNavigate()
@@ -65,16 +67,37 @@ const App = () => {
           })
         }
       }else if(searchFor === 'genre'){
-        console.log('in here')
         const result = await AuthService.getSongsByGenre(searchTerm)
       
         if(result.data.length===0) SetNotFound(true)
         else{
-          console.log(result)
           navigate("/genre", {
             state: {
               songs: result.data,
               type: searchTerm
+            }
+          })
+        }
+      }else if(searchFor === 'album'){
+        const result = await AuthService.getAlbumByName(searchTerm)
+      
+        if(result.data.length===0) SetNotFound(true)
+        else{
+          navigate("/album", {
+            state: {
+              songs: result.data,
+              albumName: searchTerm
+            }
+          })
+        }
+      }else if(searchFor === 'user'){
+        const result = await AuthService.getUserbyUsername(searchTerm)
+      
+        if(result.data.length===0) SetNotFound(true)
+        else{
+          navigate("/searchuser", {
+            state: {
+              user: result.data
             }
           })
         }
@@ -197,7 +220,7 @@ const App = () => {
             onChange={handleSearchTermChange}
             onKeyPress={(e) => {
               console.log(e)
-              if(e.charCode === 13) handleSongSearch()
+              if(e.charCode === 13) handleSongSearch() 
             }}
           />          
           </Menu.Item>
@@ -259,6 +282,7 @@ const App = () => {
           <Route path="/album" element={<Album /> } />
           <Route path="/genre" element={<Genre /> } />
           <Route path="/artist" element={<Artist /> } />
+          <Route path="/searchUser" element={<SearchUser />}/>
         </Routes>
       {/* </div> */}
 

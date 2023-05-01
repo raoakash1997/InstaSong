@@ -9,6 +9,8 @@ const morgan = require('morgan');
 const SongService = require('./service/song')
 const GenreService = require('./service/genre')
 const ArtistService = require('./service/artist')
+const AlbumService = require('./service/album')
+const UserService = require('./service/user')
 require("dotenv").config();
 
 const app = express();
@@ -86,6 +88,59 @@ app.post('/searchArtist', async (req, res) => {
   }
 })
 
+app.post('/searchAlbum', async (req, res) => {
+  try {
+    const {
+      searchTerm
+    } = req.body;
+    const song = await AlbumService.getSongsbyAlbum(searchTerm);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(song)
+  } catch (e) {
+    console.error(e);
+  }
+})
+app.post('/searchUser', async (req, res) => {
+  try {
+    const {
+      searchTerm
+    } = req.body;
+    const user = await UserService.getUserbyUsername(searchTerm);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(user)
+  } catch (e) {
+    console.error(e);
+  }
+})
+app.post('/followUser', async (req, res) => {
+  try {
+    const {
+      user1,
+      user2
+    } = req.body;
+    const user = await UserService.followUser(user1,user2);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(user)
+  } catch (e) {
+    // console.error(e);
+    if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
+    else res.status(500).send("internal server error")
+  }
+})
+app.post('/sendFriendReq', async (req, res) => {
+  try {
+    const {
+      user1,
+      user2
+    } = req.body;
+    const user = await UserService.sendFriendReq(user1,user2);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(user)
+  } catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
+  else res.status(500).send("internal server error")
+
+  }
+})
 app.use(AuthMiddleWare.loginAuth);
 
 app.get('/user', async (req,res, next) => {

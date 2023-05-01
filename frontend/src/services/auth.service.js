@@ -73,6 +73,28 @@ const getSongsByArtist = async(searchTerm) => {
    return result
 }
 
+const getUserbyUsername = async(searchTerm) => {
+  console.log(searchTerm)
+  const result = await axios.post(API_URL + "searchUser", {
+      searchTerm: searchTerm
+    })
+   return result
+}
+
+const followUser = async(user1, user2) => {
+  const result = await axios.post(API_URL + "followUser", {
+    user1,
+    user2
+  })
+  return result
+}
+const sendFriendRequest = async(user1, user2) => {
+  const result = await axios.post(API_URL + "sendFriendReq", {
+    user1,
+    user2
+  })
+  return result
+}
 const AuthService = {
   register,
   login,
@@ -81,7 +103,10 @@ const AuthService = {
   getSongByName,
   getSongsByGenre,
   getAlbumByName,
-  getSongsByArtist
+  getSongsByArtist,
+  getUserbyUsername,
+  followUser,
+  sendFriendRequest
 };
 
 export default AuthService;

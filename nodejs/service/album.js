@@ -1,9 +1,9 @@
 const db = require('../db/main');
 
-const getAlbumByName = async(searchTerm) => {
+const getSongsbyAlbum = async(searchTerm) => {
     try{
         const result = await db.getDBObject()
-        .query('select * from music_db.album where title=?', [searchTerm])
+        .query('select * from music_db.album natural join songinalbum natural join song where albumname=?', [searchTerm])
         console.log('check2', result)
         return result
     }catch(e){
@@ -12,4 +12,4 @@ const getAlbumByName = async(searchTerm) => {
     }
 }
 
-module.exports = {getAlbumByName}
+module.exports = {getSongsbyAlbum}
