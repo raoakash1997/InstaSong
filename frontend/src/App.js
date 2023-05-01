@@ -9,14 +9,15 @@ import AuthService from "./services/auth.service";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
-import Song from "./components/Song"
-import Genre from './components/Genre'
+import Song from "./components/Song";
+import Genre from './components/Genre';
+import Album from "./components/Album";
+import Artist from "./components/Artist";
+import Message from "./components/Message";
 import { Input, Menu, Modal, Button, Dropdown } from 'semantic-ui-react'
 
 import EventBus from "./common/EventBus";
 import axios from "axios";
-import Album from "./components/Album";
-import Artist from "./components/Artist";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -181,7 +182,11 @@ const App = () => {
           name='messages'
           // active={activeItem === 'messages'}
           // onClick={this.handleItemClick}
-        />
+        >
+          <Link to={"/Message"} className="nav-link">
+            {'Message'}
+          </Link>
+        </Menu.Item>
         <Menu.Item
           name='friends'
           // active={activeItem === 'friends'}
@@ -259,6 +264,7 @@ const App = () => {
           <Route path="/album" element={<Album /> } />
           <Route path="/genre" element={<Genre /> } />
           <Route path="/artist" element={<Artist /> } />
+          <Route path="/message" element={<Message />}/>
         </Routes>
       {/* </div> */}
 

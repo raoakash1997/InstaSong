@@ -8,7 +8,8 @@ const register = (userName,
   lastName,
   email, 
   profile) => {
-  return axios.post(API_URL + "signup", {
+  return axios
+    .post(API_URL + "signup", {
     userName, 
     password, 
     firstName, 
@@ -73,6 +74,19 @@ const getSongsByArtist = async(searchTerm) => {
    return result
 }
 
+//service firend and message
+const getFriendStatus = async() =>{
+  const user = getCurrentUser();
+  if (!user){
+    return;
+  }
+  const response = await axios.post(API_URL + "getFriendStatus", {
+    userID: user.id
+  });
+  return response.data
+
+}
+
 const AuthService = {
   register,
   login,
@@ -81,7 +95,8 @@ const AuthService = {
   getSongByName,
   getSongsByGenre,
   getAlbumByName,
-  getSongsByArtist
+  getSongsByArtist,
+  getFriendStatus
 };
 
 export default AuthService;

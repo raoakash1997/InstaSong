@@ -9,6 +9,8 @@ const morgan = require('morgan');
 const SongService = require('./service/song')
 const GenreService = require('./service/genre')
 const ArtistService = require('./service/artist')
+const FriendService = require('./service/friendStatus');
+
 require("dotenv").config();
 
 const app = express();
@@ -115,6 +117,18 @@ app.post('/recipe', async (req, res, next) => {
 });
 
 //Akash
+
+//getFriendStatus
+app.get('/friendsStatus', async (req, res, next) => {
+  try {
+    const user1 = req.params.user1;
+    const friendStatus = await FriendService.getFriendStatus(user1);
+    res.json(friendStatus);
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+});
 
 app.use(errorHandler);
 
