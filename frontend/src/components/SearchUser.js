@@ -20,7 +20,7 @@ const SearchUser = (props) => {
             },2000)
         }
         
-    }, [setToastMessage])
+    }, [toastMessage])
 
     useEffect(() => {
         if(error !== ""){

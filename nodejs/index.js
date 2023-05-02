@@ -10,7 +10,7 @@ const SongService = require('./service/song')
 const GenreService = require('./service/genre')
 const ArtistService = require('./service/artist')
 const AlbumService = require('./service/album')
-const UserService = require('./service/user')
+const UserService = require('./service/user');
 require("dotenv").config();
 
 const app = express();
@@ -134,6 +134,63 @@ app.post('/sendFriendReq', async (req, res) => {
       user2
     } = req.body;
     const user = await UserService.sendFriendReq(user1,user2);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(user)
+  } catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
+  else res.status(500).send("internal server error")
+
+  }
+})
+app.post('/rateSong', async (req, res) => {
+  try {
+    const {
+      userName,
+      songID,
+      numstars
+    } = req.body;
+    const user = await SongService.rateSong(userName,songID,numstars);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(user)
+  } catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
+  else res.status(500).send("internal server error")
+
+  }
+})
+
+app.post('/getRatingByUser', async(req, res) => {
+  try{
+    const {userName, songID} = req.body
+    const result = await SongService.getRatingByUser(userName,songID);
+    if(result){
+      res.send(result)
+    }else{
+      res.send([])
+    }
+  }catch(e){
+    console.log(e)
+  }
+})
+app.post('/getReviewForSong', async(req, res) => {
+  try{
+    const {songID} = req.body
+    const result = await SongService.getReviewsForSong(songID);
+    if(result){
+      res.send(result)
+    }else{
+      res.send([])
+    }
+  }catch(e){
+    console.log(e)
+  }
+})
+app.post('/reviewSong', async (req, res) => {
+  try {
+    const {
+      userName,
+      songID,
+      reviewText
+    } = req.body;
+    const user = await SongService.reviewSong(userName,songID,reviewText);
     // if(song.length === 0) res.status(404).send("song not found")
     res.send(user)
   } catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')

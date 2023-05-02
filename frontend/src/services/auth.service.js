@@ -95,6 +95,49 @@ const sendFriendRequest = async(user1, user2) => {
   })
   return result
 }
+const rateSong = async(userName, songID, numstars) => {
+  const result = await axios.post(API_URL + "rateSong", {
+    userName,
+    songID,
+    numstars
+  })
+  return result
+}
+
+const getSongRatingByUser = async(userName, songID) => {
+  const result = await axios.post(API_URL + "getRatingByUser", {
+    userName,
+    songID,
+  })
+  return result
+}
+
+const getReviewsForSong = async(songID) => {
+  try{
+    const result = await axios.post(API_URL + "getReviewForSong", {
+      songID,
+    })
+    if(result) return result
+  }catch(error){
+    console.log(error)
+  }
+  
+}
+
+const writeReviewForSong = async(userName, songID, reviewText) => {
+  try{
+    const result = await axios.post(API_URL + "reviewSong", {
+      userName,
+      songID,
+      reviewText
+    })
+    if(result) return result
+  }catch(error){
+    console.log(error)
+  }
+  
+}
+
 const AuthService = {
   register,
   login,
@@ -106,7 +149,11 @@ const AuthService = {
   getSongsByArtist,
   getUserbyUsername,
   followUser,
-  sendFriendRequest
+  sendFriendRequest, 
+  rateSong,
+  getSongRatingByUser,
+  getReviewsForSong,
+  writeReviewForSong
 };
 
 export default AuthService;
