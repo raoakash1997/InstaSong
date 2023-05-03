@@ -33,6 +33,17 @@ const sendFriendReq = async(user1,user2) => {
         throw e
     }
 }
+const getSongsfromfanartist = async(username) => {
+    try{    
+        console.log(Date.now())
+        const result = await db.getDBObject()
+        .query('select title,releaseDate,avg(stars) as average rating from userfanofartist natural join artist natural join artistperformssong natural join song', [user1,user2,"Pending",user1,new Date()])
+        return result
+    }catch(e){
+        console.log(e)
+        throw e
+    }
+}
 const getFeedData = async(userName) => {
     try{
         const ratings = await db.getDBObject()
@@ -59,4 +70,5 @@ const getFeedData = async(userName) => {
         throw(e)
     }
 }
+
 module.exports = {getUserbyUsername,followUser,sendFriendReq, getFeedData}

@@ -41,7 +41,7 @@ const Profile = () => {
             </Feed.Label>
             <Feed.Content>
               <Feed.Summary>
-                <Feed.User>{item.username}</Feed.User> {(item.type === 'rating' || item.type === 'review') && `added a ${item.type}`} {item.type ==='friend' && `accepted your friend request`}{item.type === 'follows' && `is following you!`}
+                <Feed.User>{item.username}</Feed.User> {(item.type === 'rating' || item.type === 'review') && `added a ${item.type} for ${item.title}`} {item.type ==='friend' && `accepted your friend request`}{item.type === 'follows' && `is following you!`}
                 <Feed.Date>{new Date(item.createdDate).toLocaleDateString('en-GB')}</Feed.Date>
               </Feed.Summary>
               {item.type === 'rating' && <Rating maxRating={5}  rating={item.stars}/>}
