@@ -141,6 +141,48 @@ app.post('/sendFriendReq', async (req, res) => {
 
   }
 })
+
+app.post('/acceptedFriendReq', async (req, res) => {
+  try {
+    const {
+      user1,
+      user2
+    } = req.body;
+    const user = await UserService.acceptedFriendReq(user1,user2);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(user)
+  } catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
+  else res.status(500).send("internal server error")
+
+  }
+})
+app.post('/declinedFriendReq', async (req, res) => {
+  try {
+    const {
+      user1,
+      user2
+    } = req.body;
+    const user = await UserService.declinedFriendReq(user1,user2);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(user)
+  } catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
+  else res.status(500).send("internal server error")
+
+  }
+})
+app.post('/getUserFrienPendReq', async (req, res) => {
+  try {
+    const {
+      username
+    } = req.body;
+    const user = await UserService.getUserFrienPendReq(username);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(user)
+  } catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
+  else res.status(500).send("internal server error")
+
+  }
+})
 app.post('/rateSong', async (req, res) => {
   try {
     const {

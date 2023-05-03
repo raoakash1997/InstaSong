@@ -33,6 +33,42 @@ const sendFriendReq = async(user1,user2) => {
         throw e
     }
 }
+const acceptedFriendReq = async(user1, user2) =>{
+    try{
+        console.log(user1,user2)
+        const result = await db.getDBObject()
+        .query('UPDATE friend SET acceptStatus=?, updatedAt=? WHERE user1=? AND user2=?', ["Accepted", new Date(), user2, user1])
+        return result
+    }catch(e){
+        console.log(e)
+        throw e 
+}
+}
+
+const declinedFriendReq = async(user1, user2) =>{
+    try{
+        console.log(Date.now())
+        const result = await db.getDBObject()
+        .query('UPDATE friend SET acceptStatus=?, updatedAt=? WHERE user1=? AND user2=?', ["Not accepted", new Date(), user2, user1])
+        return result
+    }catch(e){
+        console.log(e)
+        throw e
+}
+}
+//Write a function to get all the user details of everyone who sent a friend request to ?
+//right now, user1 sent request, user2 will be current user
+const getUserFrienPendReq = async(username) =>{
+    try{
+        const result = await db.getDBObject()
+        .query('SELECT * FROM friend JOIN user ON friend.user1 = user.username WHERE user2= ? AND acceptStatus = ?', [username, "Pending"])
+        console.log(result)
+        return result 
+    }catch(e){
+        console.log(e)
+        throw e
+}
+}
 const getSongsfromfanartist = async(username) => {
     try{    
         console.log(Date.now())
@@ -71,4 +107,4 @@ const getFeedData = async(userName) => {
     }
 }
 
-module.exports = {getUserbyUsername,followUser,sendFriendReq, getFeedData}
+module.exports = {getUserbyUsername,followUser,sendFriendReq,acceptedFriendReq, declinedFriendReq, getUserFrienPendReq, getFeedData, getSongsfromfanartist}

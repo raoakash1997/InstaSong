@@ -95,6 +95,31 @@ const sendFriendRequest = async(user1, user2) => {
   })
   return result
 }
+const handleApproveRequest = async(user1, user2) => {
+  const result = await axios.post(API_URL + "acceptedFriendReq", {
+    user1,
+    user2
+  })
+  return result
+}
+
+const handleDeclineRequest = async(user1, user2) => {
+  const result = await axios.post(API_URL + "declinedFriendReq", {
+    user1,
+    user2
+  })
+  return result
+}
+
+const getPendReqByUser = async(username) => {
+  const result = await axios.post(API_URL + "getUserFrienPendReq",{
+    username
+  })
+  return result
+}
+
+//Write a function to call the endpoint you defined in index.js
+//write a function to call the endpoint that you defined in index.js
 const rateSong = async(userName, songID, numstars) => {
   const result = await axios.post(API_URL + "rateSong", {
     userName,
@@ -163,7 +188,10 @@ const AuthService = {
   getSongRatingByUser,
   getReviewsForSong,
   writeReviewForSong,
-  getFeedData
+  getFeedData,
+  getPendReqByUser,
+  handleApproveRequest,
+  handleDeclineRequest
 };
 
 export default AuthService;

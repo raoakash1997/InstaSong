@@ -17,7 +17,9 @@ import EventBus from "./common/EventBus";
 import axios from "axios";
 import Album from "./components/Album";
 import Artist from "./components/Artist";
-import SearchUser from "./components/SearchUser"
+import SearchUser from "./components/SearchUser";
+import MessagePage from "./components/MessagePage";
+
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState("")
@@ -204,7 +206,11 @@ const App = () => {
           name='messages'
           // active={activeItem === 'messages'}
           // onClick={this.handleItemClick}
-        />
+        >
+          <Link to={"/MessagePage"} className="nav-link">
+            {'MessagePage'}
+          </Link>
+        </Menu.Item>
         <Menu.Item
           name='friends'
           // active={activeItem === 'friends'}
@@ -283,6 +289,7 @@ const App = () => {
           <Route path="/genre" element={<Genre /> } />
           <Route path="/artist" element={<Artist /> } />
           <Route path="/searchUser" element={<SearchUser />}/>
+          <Route path="/MessagePage" element={<MessagePage />}/>
         </Routes>
       {/* </div> */}
 
