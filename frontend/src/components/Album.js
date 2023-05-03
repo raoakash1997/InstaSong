@@ -51,7 +51,7 @@ const Album = (props) => {
                     <Card onClick={() => navigateToSong(idx)} style={{cursor: 'pointer'}}>
                         <Card.Content>
                             <Card.Header>{song.title}</Card.Header>
-                            <Card.Meta>{song.releaseDate}</Card.Meta>
+                            <Card.Meta>{new Date(song.releaseDate).toLocaleDateString('en-GB')}</Card.Meta>
                             <Card.Content>
                                 <p style={{fontFamily: 'poppins'}}>{`${Number(song.avg_rating).toFixed(1)} / 5.0`}</p>
                             </Card.Content>
