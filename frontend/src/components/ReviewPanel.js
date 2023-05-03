@@ -38,8 +38,7 @@ const ReviewPanel = ({songID}) => {
     }
 
     return (
-        <div style={{backgroundColor: 'white', padding: 32, borderRadius: 5, boxShadow:` 23px 23px 46px #afafaf,
-        -23px -23px 46px #ffffff`, minWidth: '30vw', display: 'flex', flexDirection: "column", alignItems: 'space-between', height: '70vh'}}>
+        <div style={{backgroundColor: 'white', padding: 32, borderRadius: 5, border: '1px solid #c9c9c9', minWidth: '30vw', display: 'flex', flexDirection: "column", alignItems: 'space-between', height: '70vh'}}>
             <div style={{flex: 5, overflow: 'scroll', maxHeight: '75%'}}>
             <Comment.Group>
                 <Header as='h3' dividing>

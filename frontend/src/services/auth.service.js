@@ -138,6 +138,15 @@ const writeReviewForSong = async(userName, songID, reviewText) => {
   
 }
 
+const getFeedData = async(userName) => {
+  try{
+    const result = await axios.post(API_URL + "getFeedData", {userName})
+    if(result) return result
+  }catch(error){
+    console.log(error)
+  }
+}
+
 const AuthService = {
   register,
   login,
@@ -153,7 +162,8 @@ const AuthService = {
   rateSong,
   getSongRatingByUser,
   getReviewsForSong,
-  writeReviewForSong
+  writeReviewForSong,
+  getFeedData
 };
 
 export default AuthService;

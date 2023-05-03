@@ -198,6 +198,18 @@ app.post('/reviewSong', async (req, res) => {
 
   }
 })
+
+app.post('/getFeedData', async(req, res) => {
+  try{
+    const {userName} = req.body
+    const result = await UserService.getFeedData(userName)
+    res.send(result)
+  }catch(error){
+    console.log(error)
+  }
+})
+
+
 app.use(AuthMiddleWare.loginAuth);
 
 app.get('/user', async (req,res, next) => {
