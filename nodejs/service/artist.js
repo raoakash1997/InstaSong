@@ -11,5 +11,5 @@ const getSongsByArtist = async(searchTerm) => {
         throw e
     }
 }
-
+//make a function to insert an entry into userfanofartist table in the db
 module.exports = {getSongsByArtist}

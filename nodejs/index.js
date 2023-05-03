@@ -138,9 +138,50 @@ app.post('/sendFriendReq', async (req, res) => {
     res.send(user)
   } catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
   else res.status(500).send("internal server error")
-
   }
 })
+app.post('/acceptedFriendReq', async (req, res) => {
+  try {
+    const {
+      user1,
+      user2
+    } = req.body;
+    const user = await UserService.acceptedFriendReq(user1,user2);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(user)
+  } catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
+  else res.status(500).send("internal server error")
+  }
+})
+app.post('/declinedFriendReq', async (req, res) => {
+  try {
+    const {
+      user1,
+      user2
+    } = req.body;
+    const user = await UserService.declinedFriendReq(user1,user2);
+    // if(song.length === 0) res.status(404).send("song not found")
+    res.send(user)
+  } catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
+  else res.status(500).send("internal server error")
+  }
+})
+
+//Write an endpoint to call the function in user.js
+app.post('/getUserFrienPendReq', async (req, res) =>{
+  try {
+    const {
+      username
+    } = req.body
+    const user = await UserService.getUserFrienPendReq(username);
+    console.log(user)
+    res.send(user)
+  }catch (e) { if(e.code === 'ER_DUP_ENTRY') res.status(409).send('already exists')
+  else res.status(500).send("internal server error")
+  }
+})
+//Write an endpoint to call the function in artist.js shoudl take params (username, artistID)
+
 app.use(AuthMiddleWare.loginAuth);
 
 app.get('/user', async (req,res, next) => {
