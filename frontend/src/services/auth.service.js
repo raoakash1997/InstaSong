@@ -118,6 +118,16 @@ const getPendReqByUser = async(username) => {
   return result
 }
 
+const handleFanClickService = async(username, artistID) => {
+  console.log(username, artistID)
+  const result = await axios.post(API_URL + "becomeFanOfArtist",{
+    username,
+    artistID
+  })
+  console.log("check here ")
+  return result
+  
+}
 //Write a function to call the endpoint you defined in index.js
 //write a function to call the endpoint that you defined in index.js
 const rateSong = async(userName, songID, numstars) => {
@@ -191,7 +201,8 @@ const AuthService = {
   getFeedData,
   getPendReqByUser,
   handleApproveRequest,
-  handleDeclineRequest
+  handleDeclineRequest,
+  handleFanClickService
 };
 
 export default AuthService;

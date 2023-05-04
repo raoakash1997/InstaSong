@@ -251,6 +251,16 @@ app.post('/getFeedData', async(req, res) => {
   }
 })
 
+app.post('/becomeFanOfArtist', async(req, res) =>{
+  try{
+    const {username,artistID } = req.body
+    const result = await ArtistService.becomeFanOfArtist(username, artistID)
+    res.send(result)
+  }catch(error){
+    console.log(error)
+  }
+})
+
 
 app.use(AuthMiddleWare.loginAuth);
 

@@ -22,7 +22,7 @@ const Song = (props) => {
         }
       }
     const {songID, title, songURL, releaseDate} = location.state.song
-
+    
       const getSongRating = async() => {
         try{
           const user = JSON.parse(localStorage.getItem("user"))
