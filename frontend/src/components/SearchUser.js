@@ -36,6 +36,7 @@ const SearchUser = (props) => {
         const user = JSON.parse(localStorage.getItem("user"))
         const result = await AuthService.followUser(user.userName, username)
         // if(result.data.length===0) return 
+
         setToastMessage(`Now following ${username}`)
         }catch(error){
             setError(error.response.data)
