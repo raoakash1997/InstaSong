@@ -172,6 +172,32 @@ const getFeedData = async(userName) => {
   }
 }
 
+const getPlaylistsByUser = async(userName) => {
+  try{
+    const result = await axios.post(API_URL + "getAllPlaylistsForUser", {userName})
+    return result
+  }catch(error){
+    console.log(error)
+  }
+}
+
+const createPlaylist = async(userName, pname) => {
+  try{
+    const result = await axios.post(API_URL + "createPlaylist", {userName, pname})
+    console.log(result)
+    return result
+  }catch(error){
+    console.log(error)
+  }
+}
+
+const addSongToPlaylist = async(userName, pname, songID) => {
+    const result = await axios.post(API_URL + "addSongToPlaylist", {userName, pname, songID})
+    console.log(result)
+    return result
+ 
+}
+
 const AuthService = {
   register,
   login,
@@ -191,7 +217,10 @@ const AuthService = {
   getFeedData,
   getPendReqByUser,
   handleApproveRequest,
-  handleDeclineRequest
+  handleDeclineRequest,
+  getPlaylistsByUser,
+  createPlaylist,
+  addSongToPlaylist
 };
 
 export default AuthService;

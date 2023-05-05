@@ -11,6 +11,7 @@ const GenreService = require('./service/genre')
 const ArtistService = require('./service/artist')
 const AlbumService = require('./service/album')
 const UserService = require('./service/user');
+const PlaylistService=require('./service/playlist')
 require("dotenv").config();
 
 const app = express();
@@ -250,8 +251,59 @@ app.post('/getFeedData', async(req, res) => {
     console.log(error)
   }
 })
+app.post('/getSongsForFeed', async(req, res)=> {
+  try{ 
+    const {userName} = req.body
+    const result = await UserService.getSongsfromfanartist(userName)
+    res.send(result)
 
+  }catch(error){
+    console.log(error)
+  }
+})
 
+app.post('/createPlaylist', async(req, res)=> {
+  try{ 
+    const {userName,pname} = req.body
+    const result = await PlaylistService.createPlaylist(userName,pname)
+    res.send(result)
+
+  }catch(error){ if(error.code === 'ER_DUP_ENTRY') res.status(409).send('playlist already exists')
+  else res.status(500).send("internal server error")
+    console.log(error)
+  }
+})
+app.post('/addSongToPlaylist', async(req, res)=> {
+  try{ 
+    const {userName,pname,songID} = req.body
+    const result = await PlaylistService.addSongToPlaylist(userName,songID,pname)
+    res.send(result)
+
+  }catch(error){ if(error.code === 'ER_DUP_ENTRY') res.status(409).send('song already exists in playlist')
+  else res.status(500).send("internal server error")
+    console.log(error)
+  }
+})
+app.post('/getAllPlaylistsForUser', async(req, res)=> {
+  try{ 
+    const {userName} = req.body
+    const result = await PlaylistService.getAllPlaylistsForUser(userName)
+    res.send(result)
+
+  }catch(error){
+    console.log(error)
+  }
+})
+app.post('/getSongsInPlaylist', async(req, res)=> {
+  try{ 
+    const {userName,pname} = req.body
+    const result = await PlaylistService.getAllSongsInPlaylist(userName,pname)
+    res.send(result)
+
+  }catch(error){
+    console.log(error)
+  }
+})
 app.use(AuthMiddleWare.loginAuth);
 
 app.get('/user', async (req,res, next) => {

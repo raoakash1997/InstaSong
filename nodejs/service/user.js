@@ -71,9 +71,8 @@ const getUserFrienPendReq = async(username) =>{
 }
 const getSongsfromfanartist = async(username) => {
     try{    
-        console.log(Date.now())
         const result = await db.getDBObject()
-        .query('select title,releaseDate,avg(stars) as average rating from userfanofartist natural join artist natural join artistperformssong natural join song', [user1,user2,"Pending",user1,new Date()])
+        .query('select title,releaseDate,avg(stars) as avg_rating from userfanofartist natural join artist natural join artistperformssong natural join song where username=? group by songID', [username])
         return result
     }catch(e){
         console.log(e)
@@ -108,3 +107,5 @@ const getFeedData = async(userName) => {
 }
 
 module.exports = {getUserbyUsername,followUser,sendFriendReq,acceptedFriendReq, declinedFriendReq, getUserFrienPendReq, getFeedData, getSongsfromfanartist}
+
+

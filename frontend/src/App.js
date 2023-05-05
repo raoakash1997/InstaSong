@@ -19,6 +19,7 @@ import Album from "./components/Album";
 import Artist from "./components/Artist";
 import SearchUser from "./components/SearchUser";
 import MessagePage from "./components/MessagePage";
+import Playlists from "./components/Playlists";
 
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -201,7 +202,9 @@ const App = () => {
           name='home'
           // active={activeItem === 'home'}
           // onClick={this.handleItemClick}
-        />
+        >
+          <Link to={'/profile'}>Home</Link>
+        </Menu.Item>
         <Menu.Item
           name='messages'
           // active={activeItem === 'messages'}
@@ -212,10 +215,12 @@ const App = () => {
           </Link>
         </Menu.Item>
         <Menu.Item
-          name='friends'
+          name='playlists'
           // active={activeItem === 'friends'}
           // onClick={this.handleItemClick}
-        />
+        >
+          <Link to ={'playlists'}>Playlists</Link>
+        </Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
           <Input
@@ -290,6 +295,7 @@ const App = () => {
           <Route path="/artist" element={<Artist /> } />
           <Route path="/searchUser" element={<SearchUser />}/>
           <Route path="/MessagePage" element={<MessagePage />}/>
+          <Route path="/playlists" element={<Playlists />} />
         </Routes>
       {/* </div> */}
 
