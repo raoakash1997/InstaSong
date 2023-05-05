@@ -208,6 +208,15 @@ const addSongToPlaylist = async(userName, pname, songID) => {
  
 }
 
+const getSongsInPlaylist = async(userName, pname) => {
+  try{
+    const result = await axios.post(API_URL + "getSongsInPlaylist", {userName, pname})
+    return result
+  }catch(error){
+    console.log(error)
+  }
+}
+
 const AuthService = {
   register,
   login,
@@ -231,7 +240,8 @@ const AuthService = {
   getPlaylistsByUser,
   createPlaylist,
   addSongToPlaylist,
-  handleFanClickService
+  handleFanClickService,
+  getSongsInPlaylist
 };
 
 export default AuthService;

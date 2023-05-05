@@ -37,7 +37,7 @@ const getAllPlaylistsForUser = async(username) =>{
 const getAllSongsInPlaylist = async(username,pname) =>{
     try{
         const result = await db.getDBObject()
-        .query(`select title,releaseDate,avg(stars) as avg_rating from songsinplaylist natural join song where username=? and pname=? group by songID`,[username,pname])
+        .query(`select songID, title,releaseDate,avg(stars) as avg_rating, songURL from songinplaylist natural join song natural join ratesong where username=? and pname=? group by songID`,[username,pname])
         return result
     }catch(error)
     {

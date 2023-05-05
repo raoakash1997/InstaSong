@@ -69,6 +69,7 @@ const Song = (props) => {
     
 
     useEffect(() => {
+      console.log(location.state.song)
         getSongRating()
         getPlayLists()
     }, [location.state.song])

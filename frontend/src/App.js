@@ -20,7 +20,7 @@ import Artist from "./components/Artist";
 import SearchUser from "./components/SearchUser";
 import MessagePage from "./components/MessagePage";
 import Playlists from "./components/Playlists";
-
+import Playlist from "./components/Playlist"
 const App = () => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState("")
@@ -296,6 +296,7 @@ const App = () => {
           <Route path="/searchUser" element={<SearchUser />}/>
           <Route path="/MessagePage" element={<MessagePage />}/>
           <Route path="/playlists" element={<Playlists />} />
+          <Route path="/playlist" element={<Playlist />} />
         </Routes>
       {/* </div> */}
 

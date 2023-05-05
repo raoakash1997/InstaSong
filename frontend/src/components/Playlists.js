@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react'
 import AuthService from '../services/auth.service'
-import { Button, Modal, Form, Card } from 'semantic-ui-react'
+import { Button, Modal, Form, Card, Grid } from 'semantic-ui-react'
+import { useNavigate } from 'react-router-dom'
 
 const Playlists = () => {
 
@@ -8,7 +9,7 @@ const Playlists = () => {
     const [open, setOpen] = useState(false)
     const [playlistName, setName] = useState('')
     const [playlists, setPlaylists] = useState([])
-    const [openPlaylists, setOpenPlaylists] = useState([])
+    const navigate = useNavigate()
 
     const getPlayLists = async() => {
         try{
@@ -41,16 +42,12 @@ const Playlists = () => {
         setOpen(true)
     }
 
-    const togglePlaylist = pname => {
-        if(openPlaylists.find(el => el === pname)){
-            console.log('in here', openPlaylists)
-            let tmp = [...openPlaylists]
-            tmp = tmp.filter(item => item !== pname)
-            console.log(tmp)
-            setOpenPlaylists(tmp)
-            return
-        }
-        setOpenPlaylists([...openPlaylists, pname])
+    const navigateToPlaylist = (pname) => {
+        navigate("/playlist", {
+            state: {
+              playlist: pname
+            }
+        })
     }
 
     return(
@@ -76,27 +73,22 @@ const Playlists = () => {
                 </Modal>
             <Button onClick={openNameModal} primary>Create Playlist</Button>
             <div style={{marginTop: 32}}>
+            <Grid relaxed columns={4}>
+
             {playlists && playlists.map(item => {
                 return(
-                    <Card
-                        
-                    >
-                       <Card.Header>{item.pname}</Card.Header>
-                       <Card.Meta>{`Created on ${new Date(item.createdDate).toLocaleDateString('en-GB')}`}</Card.Meta>
-                       <Card.Description>{`Number of songs ${item.numsongs}`}</Card.Description>
-                       <div onClick={() => togglePlaylist(item.pname)}>
-                            Songs in playlist
-                       </div>
-                       {openPlaylists.find(element => element === item.pname) && 
-                       <div>
-                            <ul>
-                                <li>song 1</li>
-                            </ul>
-                       </div>
-                       }
-                    </Card>
+                    <Grid.Column>
+                        <Card
+                            header={item.pname}
+                            meta={`Created on ${new Date(item.createdDate).toLocaleDateString('en-GB')}`}
+                            description={`Number of songs ${item.numsongs}`}
+                            onClick={() => navigateToPlaylist(item.pname)}
+                            style={{cursor: 'pointer'}}
+                        />
+                    </Grid.Column>
                 )
             })}
+            </Grid>
             </div>
         </div>
     )

@@ -44,6 +44,7 @@ const Artist = (props) => {
     //   }
     // const {title, songURL, releaseDate} = location.state.song
     useEffect(() => {
+        console.log(location.state)
         setFilteredSongs(location.state.songs)
     }, [])
 
