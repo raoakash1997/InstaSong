@@ -1,7 +1,7 @@
 import { useEffect,useState } from 'react'
 import { useLocation, useNavigate } from "react-router-dom";
 import YouTube from 'react-youtube';
-import {Card,Message,Rating} from 'semantic-ui-react'
+import {Card,Message,Rating, Button} from 'semantic-ui-react'
 import AuthService from '../services/auth.service';
 
 const Artist = (props) => {
@@ -9,7 +9,7 @@ const Artist = (props) => {
     const navigate = useNavigate()
     const [ratingThresh, setThresh]  = useState(0)
     const [filterSongs, setFilteredSongs] = useState([])
-
+    const [isFan, setFan] = useState(false)
     const [toastMessage, setToastMessage] = useState("")
     const [error, setError] = useState("")
 
@@ -43,10 +43,25 @@ const Artist = (props) => {
     //     }
     //   }
     // const {title, songURL, releaseDate} = location.state.song
+
+    const checkIfFan = async() => {
+        try{
+            const artistID = location.state.songs[0].artistID
+            const user = JSON.parse(localStorage.getItem("user"))
+            const result = await AuthService.getArtistForUsername(user.userName)
+            const isFan = result.data.find(item => item.artistID === artistID)
+            console.log(isFan)
+            setFan(isFan ? true : false)
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         console.log(location.state)
         setFilteredSongs(location.state.songs)
-    }, [])
+        checkIfFan()
+    }, [location.state.songs])
 
     const navigateToSong = idx => {
         navigate("/song", {
@@ -72,6 +87,7 @@ const Artist = (props) => {
         const user = JSON.parse(localStorage.getItem("user"))
         const result = await AuthService.handleFanClickService(user.userName,artistID )
          //if(result.data.length===0) return 
+         setFan(true)
         console.log(result)
         setToastMessage(`Congratulation, You become fan of ${artistID}`)
         }catch(error){
@@ -97,9 +113,15 @@ const Artist = (props) => {
                 <p style={{fontFamily: 'poppins', marginRight: 16}}>Filter by Average Rating</p>
             <Rating rating={ratingThresh} maxRating={5} onRate={handleThreshChange} />
             </div>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-start'}}>
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start'}}>
                 <h1>{location.state.artist}</h1>
-                <button onClick={handleFanClick}>Become a Fan</button>
+                <Button
+                    onClick={handleFanClick}
+                    content={'Become a fan'}
+                    color='red'
+                    icon='heart'
+                    disabled={isFan}
+                />
             </div>
             {/*<h1>{location.state.artist}</h1>*/}
              {

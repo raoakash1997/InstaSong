@@ -315,6 +315,16 @@ app.post('/getSongsInPlaylist', async(req, res)=> {
     console.log(error)
   }
 })
+app.post('/getArtistForUsername', async(req, res)=> {
+  try{ 
+    const {userName} = req.body
+    const result = await ArtistService.getAllArtistsForUser(userName)
+    res.send(result)
+
+  }catch(error){
+    console.log(error)
+  }
+})
 app.use(AuthMiddleWare.loginAuth);
 
 app.get('/user', async (req,res, next) => {

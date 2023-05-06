@@ -72,13 +72,14 @@ const getUserFrienPendReq = async(username) =>{
 const getSongsfromfanartist = async(username) => {
     try{    
         const result = await db.getDBObject()
-        .query('select title,releaseDate,avg(stars) as avg_rating from userfanofartist natural join artist natural join artistperformssong natural join song where username=? group by songID', [username])
+        .query('select title,releaseDate,avg(stars) as avg_rating, songURL from userfanofartist natural join artist natural join artistperformssong natural join song natural join ratesong where username=? group by songID', [username])
         return result
     }catch(e){
         console.log(e)
         throw e
     }
 }
+
 const getFeedData = async(userName) => {
     try{
         const ratings = await db.getDBObject()

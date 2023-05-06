@@ -36,5 +36,14 @@ const getFanOfArtist = async(artistID) =>{
         throw e
     }
 }
+const getAllArtistsForUser = async(username) =>{
+    try{
+        const result = await db.getDBObject().query(`select * from userFanOfArtist where username=?`, [username])
+        return result
+    }catch(e)
+    {
+        throw e
+    }
+}
 
-module.exports = {getSongsByArtist, becomeFanOfArtist}
+module.exports = {getSongsByArtist, becomeFanOfArtist, getAllArtistsForUser}
